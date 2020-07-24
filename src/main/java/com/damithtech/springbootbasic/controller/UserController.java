@@ -1,5 +1,6 @@
 package com.damithtech.springbootbasic.controller;
 
+import com.damithtech.springbootbasic.exception.UserNotFoundException;
 import com.damithtech.springbootbasic.model.User;
 import com.damithtech.springbootbasic.service.UserDaoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +31,11 @@ public class UserController {
 
     @GetMapping(value = "/getAllUsers/{id}")
     public User getUser(@PathVariable int id) {
-        return userDaoService.findOneUser(id);
+        User user = userDaoService.findOneUser(id);
+            if (user == null){
+                throw new UserNotFoundException("id-" + id);
+            }
+        return user;
     }
 
     @PostMapping(value = "/saveUser")

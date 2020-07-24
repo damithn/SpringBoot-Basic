@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import javax.validation.Valid;
 import java.net.URI;
 import java.util.List;
 
@@ -39,10 +40,12 @@ public class UserController {
         return user;
     }
 
+    //@valid annotation used for validate User variables -- javax.validation
     @PostMapping(value = "/saveUser")
-    public ResponseEntity<User> saveUser(@RequestBody User user) {
+    public ResponseEntity<User> saveUser(@Valid @RequestBody User user) {
         User saveUser = userDaoService.saveUser(user);
 
+        //get uri to location header
         URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(
                 saveUser.getId()).toUri();
 
@@ -56,6 +59,7 @@ public class UserController {
         if (user == null) {
             throw new UserNotFoundException("id-" + id);
         }
+        //can remove ResponseEntity and just returned 200ok.
         return ResponseEntity.noContent().build();
     }
 }

@@ -1,5 +1,7 @@
 package com.damithtech.springbootbasic.model;
 
+import javax.validation.constraints.Past;
+import javax.validation.constraints.Size;
 import java.util.Date;
 
 /**
@@ -7,7 +9,13 @@ import java.util.Date;
  */
 public class User {
     private Integer id;
+
+    //validate user name character
+    @Size(min = 2 , message = "name should have @ least two characters")
     private String name;
+
+    //validate user BD for past date
+    @Past(message = "birtdate should have past date")
     private Date birthDate;
 
     public User(Integer id, String name, Date birthDate) {

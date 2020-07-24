@@ -29,7 +29,7 @@ public class ExceptionResponse {
     }
 
     public void setMessage(String message) {
-        this.message = message; 
+        this.message = message;
     }
 
     public String getDetails() {

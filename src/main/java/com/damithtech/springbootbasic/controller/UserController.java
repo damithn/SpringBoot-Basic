@@ -5,6 +5,7 @@ import com.damithtech.springbootbasic.model.User;
 import com.damithtech.springbootbasic.service.UserDaoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -32,9 +33,9 @@ public class UserController {
     @GetMapping(value = "/getAllUsers/{id}")
     public User getUser(@PathVariable int id) {
         User user = userDaoService.findOneUser(id);
-            if (user == null){
-                throw new UserNotFoundException("id-" + id);
-            }
+        if (user == null) {
+            throw new UserNotFoundException("id-" + id);
+        }
         return user;
     }
 
@@ -46,5 +47,15 @@ public class UserController {
                 saveUser.getId()).toUri();
 
         return ResponseEntity.created(location).build();
+    }
+
+
+    @DeleteMapping(value = "/deleteUserById/{id}")
+    public ResponseEntity deleteUserById(@PathVariable int id) {
+        User user = userDaoService.DeleteUserById(id);
+        if (user == null) {
+            throw new UserNotFoundException("id-" + id);
+        }
+        return ResponseEntity.noContent().build();
     }
 }

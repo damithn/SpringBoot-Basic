@@ -42,6 +42,7 @@ public class UserController {
         }
 
         //link to retreview all users insted of User
+        //HATEOAS
         EntityModel<User> resource = EntityModel.of(user);
         ControllerLinkBuilder linkTo = ControllerLinkBuilder.linkTo(
                 ControllerLinkBuilder.methodOn(this.getClass()).getAllUsers());

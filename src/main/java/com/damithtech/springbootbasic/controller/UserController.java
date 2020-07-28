@@ -1,9 +1,12 @@
 package com.damithtech.springbootbasic.controller;
 
+
 import com.damithtech.springbootbasic.exception.UserNotFoundException;
 import com.damithtech.springbootbasic.model.User;
 import com.damithtech.springbootbasic.service.UserDaoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.EntityModel;
+import org.springframework.hateoas.server.mvc.ControllerLinkBuilder;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -32,13 +35,21 @@ public class UserController {
     }
 
     @GetMapping(value = "/getAllUsers/{id}")
-    public User getUser(@PathVariable int id) {
+    public EntityModel<User> getUser(@PathVariable int id) {
         User user = userDaoService.findOneUser(id);
         if (user == null) {
             throw new UserNotFoundException("id-" + id);
         }
-        return user;
+
+        //link to retreview all users insted of User
+        EntityModel<User> resource = EntityModel.of(user);
+        ControllerLinkBuilder linkTo = ControllerLinkBuilder.linkTo(
+                ControllerLinkBuilder.methodOn(this.getClass()).getAllUsers());
+        resource.add(linkTo.withRel("all-users"));
+
+        return resource;
     }
+
 
     //@valid annotation used for validate User variables -- javax.validation
     @PostMapping(value = "/saveUser")

@@ -53,6 +53,12 @@
             <artifactId>spring-hateoas</artifactId>
             <version>1.1.0.RELEASE</version>
         </dependency>
+        <!-- Adding content negotions to rest service -->
+        <dependency>
+            <groupId>com.fasterxml.jackson.dataformat</groupId>
+            <artifactId>jackson-dataformat-xml</artifactId>
+            <version>2.10.1</version>
+        </dependency>
     </dependencies>
 
     <build>

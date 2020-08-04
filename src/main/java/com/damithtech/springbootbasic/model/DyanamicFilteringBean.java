@@ -1,22 +1,17 @@
 package com.damithtech.springbootbasic.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonFilter;
 
 /**
  * @author DAMITH SAMARAKOON on 8/4/2020
  */
-
-//another way to do static filtering
-//@JsonIgnoreProperties("field3")
-public class TestBean {
+@JsonFilter("BeanFilter")
+public class DyanamicFilteringBean {
     private String field1;
     private String field2;
-    //Static filtering
-    @JsonIgnore
     private String field3;
 
-    public TestBean(String field1, String field2, String field3) {
+    public DyanamicFilteringBean(String field1, String field2, String field3) {
         this.field1 = field1;
         this.field2 = field2;
         this.field3 = field3;
